@@ -27,50 +27,37 @@ addgroup -S nginx \
 gpg --import /usr/src/nginx.key
 
 CONFIG="\
-        --prefix=/etc/nginx \
-        --sbin-path=/usr/sbin/nginx \
-        --modules-path=/usr/lib/nginx/modules \
-        --conf-path=/etc/nginx/nginx.conf \
-        --error-log-path=/var/log/nginx/error.log \
-        --http-log-path=/var/log/nginx/access.log \
-        --pid-path=/var/run/nginx.pid \
-        --lock-path=/var/run/nginx.lock \
-        --http-client-body-temp-path=/var/cache/nginx/client_temp \
-        --http-proxy-temp-path=/var/cache/nginx/proxy_temp \
-        --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
-        --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
-        --http-scgi-temp-path=/var/cache/nginx/scgi_temp \
-        --user=nginx \
-        --group=nginx \
-        --with-http_ssl_module \
-        --with-http_realip_module \
-        --with-http_addition_module \
-        --with-http_sub_module \
-        --with-http_dav_module \
-        --with-http_flv_module \
-        --with-http_mp4_module \
-        --with-http_gunzip_module \
-        --with-http_gzip_static_module \
-        --with-http_random_index_module \
-        --with-http_secure_link_module \
-        --with-http_stub_status_module \
-        --with-http_auth_request_module \
-        --with-http_xslt_module=dynamic \
-        --with-http_image_filter_module=dynamic \
-        --with-http_geoip_module=dynamic \
-        --with-http_perl_module=dynamic \
-        --with-threads \
-        --with-stream \
-        --with-stream_ssl_module \
-        --with-http_slice_module \
-        --with-mail \
-        --with-mail_ssl_module \
-        --with-file-aio \
-        --with-http_v2_module \
-        --with-ipv6 \
-        --add-module=/usr/src/progress/nginx-upload-progress-module-master \
-        --add-module=/usr/src/upload/nginx-upload-module \
-    "
+--prefix=/etc/nginx \
+--sbin-path=/usr/sbin/nginx \
+--modules-path=/usr/lib64/nginx/modules \
+--conf-path=/etc/nginx/nginx.conf \
+--error-log-path=/var/log/nginx/error.log \
+--http-log-path=/var/log/nginx/access.log \
+--pid-path=/var/run/nginx.pid \
+--lock-path=/var/run/nginx.lock \
+--http-client-body-temp-path=/var/cache/nginx/client_temp \
+--http-proxy-temp-path=/var/cache/nginx/proxy_temp \
+--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \
+--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \
+--http-scgi-temp-path=/var/cache/nginx/scgi_temp \
+--user=nginx \
+--group=nginx \
+--with-http_ssl_module \
+--with-http_realip_module \
+--with-http_addition_module \
+--with-http_gunzip_module \
+--with-http_gzip_static_module \
+--with-http_secure_link_module \
+--with-http_dav_module \
+--with-http_stub_status_module \
+--with-http_v2_module \
+--with-threads \
+--with-pcre \
+--with-file-aio \
+--with-openssl=/usr/src/openssl-1.0.2s \
+--with-zlib=/usr/src/zlib-1.2.11 \
+--add-module=../nginx-upload-module \
+"
 curl -fSL http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz
 curl -fSL http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc
 gpg --batch --verify nginx.tar.gz.asc nginx.tar.gz
@@ -79,39 +66,53 @@ rm -r "$GNUPGHOME" nginx.tar.gz.asc
 mkdir -p /usr/src
 tar -zxC /usr/src -f nginx.tar.gz
 rm nginx.tar.gz
-mkdir -p /usr/src/upload
-cd /usr/src/upload
+#mkdir -p /usr/src/upload
+#ls /usr/src
+#ls /usr/src/upload
+#cd /usr/src/upload
+#wget http://www.openssl.org/source/openssl-1.0.2s.tar.gz
+#wget http://ftp.pcre.org/pub/pcre/pcre-8.42.tar.gz
+#wget http://zlib.net/zlib-1.2.11.tar.gz
+pwd
+cd /usr/src/
+tar xvf openssl-1.0.2s.tar.gz
+tar xvf pcre-8.42.tar.gz
+tar xvf zlib-1.2.11.tar.gz
 git clone https://github.com/iymaltsev/nginx-upload-module.git
-cd nginx-upload-module
+#cd nginx-upload-module
 # git checkout master # Already on 'master'
-mkdir -p /usr/src/progress
-cd /usr/src/progress
-curl -fSLO https://github.com/masterzen/nginx-upload-progress-module/archive/master.zip
-unzip master.zip
+#mkdir -p /usr/src/progress
+#cd /usr/src/progress
+#curl -fSLO https://github.com/masterzen/nginx-upload-progress-module/archive/master.zip
+#unzip master.zip
 cd /usr/src/nginx-$NGINX_VERSION
-./configure $CONFIG --with-debug
-make -j$(getconf _NPROCESSORS_ONLN)
-mv objs/nginx objs/nginx-debug
-mv objs/ngx_http_xslt_filter_module.so objs/ngx_http_xslt_filter_module-debug.so
-mv objs/ngx_http_image_filter_module.so objs/ngx_http_image_filter_module-debug.so
-mv objs/ngx_http_geoip_module.so objs/ngx_http_geoip_module-debug.so
-mv objs/ngx_http_perl_module.so objs/ngx_http_perl_module-debug.so
+#./configure $CONFIG --with-debug
+#make -j$(getconf _NPROCESSORS_ONLN)
+#mv objs/nginx objs/nginx-debug
+#mv objs/ngx_http_xslt_filter_module.so objs/ngx_http_xslt_filter_module-debug.so
+#mv objs/ngx_http_image_filter_module.so objs/ngx_http_image_filter_module-debug.so
+#mv objs/ngx_http_geoip_module.so objs/ngx_http_geoip_module-debug.so
+#mv objs/ngx_http_perl_module.so objs/ngx_http_perl_module-debug.so
 ./configure $CONFIG
-make -j$(getconf _NPROCESSORS_ONLN)
+#make -j$(getconf _NPROCESSORS_ONLN)
+pwd
+ls ./
+ls ../
+make
 make install
 rm -rf /etc/nginx/html/
 mkdir -p /etc/nginx/conf.d/
 mkdir -p /usr/share/nginx/html/
 install -m644 html/index.html /usr/share/nginx/html/
 install -m644 html/50x.html /usr/share/nginx/html/
-install -m755 objs/nginx-debug /usr/sbin/nginx-debug
-install -m755 objs/ngx_http_xslt_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so
-install -m755 objs/ngx_http_image_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_image_filter_module-debug.so
-install -m755 objs/ngx_http_geoip_module-debug.so /usr/lib/nginx/modules/ngx_http_geoip_module-debug.so
-install -m755 objs/ngx_http_perl_module-debug.so /usr/lib/nginx/modules/ngx_http_perl_module-debug.so
-ln -s ../../usr/lib/nginx/modules /etc/nginx/modules
+#install -m755 objs/nginx-debug /usr/sbin/nginx-debug
+#install -m755 objs/ngx_http_xslt_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so
+#install -m755 objs/ngx_http_image_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_image_filter_module-debug.so
+#install -m755 objs/ngx_http_geoip_module-debug.so /usr/lib/nginx/modules/ngx_http_geoip_module-debug.so
+#install -m755 objs/ngx_http_perl_module-debug.so /usr/lib/nginx/modules/ngx_http_perl_module-debug.so
+#ln -s ../../usr/lib/nginx/modules /etc/nginx/modules
 strip /usr/sbin/nginx*
-strip /usr/lib/nginx/modules/*.so
+#strip /usr/lib/nginx/modules/*.so
 rm -rf /usr/src/nginx-$NGINX_VERSION
 rm -rf /usr/src/upload
 rm -rf /usr/src/progress
