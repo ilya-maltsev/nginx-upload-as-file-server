@@ -5,7 +5,8 @@
 
 ### on Host machine:
 
-```/etc/hosts:
+```
+/etc/hosts:
 192.168.1.2 file-storage.loc
 
 cd ./nginx-upload-with-progress-modules/
@@ -18,7 +19,8 @@ curl -X POST -H "Folder: 2019-08-29" -H "Host: file-storage.loc" -H "Content-Dis
 
 ### in same time nginx-upload-module will send file metadata to "backend":
 
-```POST /upload/ HTTP/1.0
+```
+POST /upload/ HTTP/1.0
 Host: 127.0.0.1:81
 Connection: close
 Content-Length: 578
@@ -58,7 +60,8 @@ file-storage.loc
 
 ### enter to container and try to download file:
 
-```docker ps
+```
+docker ps
 docker exec -it b13cf72be58a sh
 wget http://127.0.0.1:81/download/2019-08-29/111.txt
 ```
