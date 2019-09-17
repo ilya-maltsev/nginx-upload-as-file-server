@@ -14,7 +14,7 @@ docker build -t nginx_image .
 docker run -d -v /webroot:/var/www/html -p 80:80 --name nginx_upload nginx_image
 echo "123" >> 111.txt
 
-curl -X POST -H "Folder: 2019-08-29" -H "Host: file-storage.loc" -H "Content-Disposition: attachment, filename=\"111.txt\"" -H "X-Session-ID: 111.txt" --data-binary @./111.txt "http://192.168.1.2/upload/"
+curl -X POST -H "Backend: 127.0.0.1:81" -H "Folder: 2019-08-29" -H "Host: file-storage.loc" -H "Content-Disposition: attachment, filename=\"111.txt\"" -H "X-Session-ID: 111.txt" --data-binary @./111.txt "http://192.168.1.2/upload/"
 ```
 
 ### in same time nginx-upload-module will send file metadata to "backend":
