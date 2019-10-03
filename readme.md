@@ -65,3 +65,37 @@ docker ps
 docker exec -it b13cf72be58a sh
 wget http://127.0.0.1:81/download/2019-08-29/111.txt
 ```
+### Upload in "sync" mode
+request:
+```
+POST /upload-sync HTTP/1.1
+User-Agent: GuzzleHttp/6.3.3 curl/7.29.0 PHP/7.3.9
+Host: file-storage.loc
+Folder: 2019-10-02
+X-Session-ID: 8671dc99d008.txt
+X-FileId: 87
+Content-Disposition: attachment
+Content-Type: text/xml
+Accept: */*
+Content-Length: 1112
+ 
+<?xml version="1.0" encoding="UTF-8"?>
+```
+response:
+```
+HTTP/1.1 200 OK
+Server: nginx
+Date: Wed, 02 Oct 2019 06:59:06 GMT
+Content-Type: application/octet-stream
+Content-Length: 0
+Connection: keep-alive
+Filename:  8671dc99d008.txt
+Storage: s1.filestorage.loc
+Folder: 2019-10-02
+CRC32: 43bec48b
+```
+
+
+
+
+
