@@ -94,8 +94,32 @@ Storage: s1.filestorage.loc
 Folder: 2019-10-02
 CRC32: 43bec48b
 ```
+### Using secure link module for defend links
+nginx config:
+```
+   location ~ ^/download/(?<secured_stuff>.+)/(?<secure>[\w-]+,\d+)$ {             
 
+                                                                 
+        secure_link     $secure; # in this case = "MD5_HASH,timestamp"                                                   
+        secure_link_md5      PASSWORD$secure_link_expires$secured_stuff;          
+        if ($secure_link = "") { return 403; } # invalid link    
+        if ($secure_link = 0) { return 410; } # expired link                        
+                                                                                    
+        rewrite ^ /download/$secured_stuff;                      
+    }                                                                               
+                                                                                    
+    location /download/ {                                                           
+        internal;                                                      
+        alias /var/upload/;                                                         
+    } 
 
-
-
+```
+generate md5 with openssl
+```
+echo -n 'PASSWORD21474836472019-05-12/111.txt' | openssl md5 -binary | openssl base64 | tr +/ -_ | tr -d =
+```
+Example download 
+```
+wget http://file-storage.loc/download/2019-05-12/111.txt/89VaJ0KNogCUd1Ch3AmfRQ,2147483647
+```
 
