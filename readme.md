@@ -122,4 +122,23 @@ Example download
 ```
 wget http://file-storage.loc/download/2019-05-12/111.txt/89VaJ0KNogCUd1Ch3AmfRQ,2147483647
 ```
+Test uploading files
+vim /root/test.sh:
+```
+#/bin/bash
+for i in `seq 1 1000`
+        do
+                >/root/test.txt;
+                for i in `seq 1 100`
+                        do
+                                head /dev/urandom | tr -dc A-Za-z0-9 | head -c 15 >> /root/test.txt
+                        done
+                t_dir=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 15)
+                t_name=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 50)
+                curl -i -X POST -H "Folder: 11/$t_dir" -H "X-Session-ID: $t_name.txt" -H "Host: file-storage.loc" -H "Content-Disposition: attachment" --data-binary @/root/test.txt "http://192.168.1.2/upload-sync"
+        done
+
+```
+chmod +x /root/test.sh
+
 
