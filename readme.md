@@ -1,4 +1,4 @@
-### Compiling nginx with nginx-upload-module for file server
+### Compiling nginx with nginx-upload-module for file storage
 
 1. https://github.com/iymaltsev/nginx-upload-module
 2. https://www.yanxurui.cc/posts/server/2017-03-21-NGINX-as-a-file-server/#nginx-upload-module
