@@ -78,7 +78,7 @@ cd /usr/src/
 tar xvf openssl-1.0.2s.tar.gz
 tar xvf pcre-8.42.tar.gz
 tar xvf zlib-1.2.11.tar.gz
-git clone https://github.com/iymaltsev/nginx-upload-module.git
+git clone https://github.com/ilya-maltsev/nginx-upload-module.git
 #cd nginx-upload-module
 # git checkout master # Already on 'master'
 #mkdir -p /usr/src/progress
